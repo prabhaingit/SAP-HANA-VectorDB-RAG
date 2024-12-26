@@ -52,7 +52,7 @@ def process_pdf(file_path):
 def store_in_hana(chunks, filename):
     # Initialize HANA connection
     HANA_CONNECTION = dbapi.connect(
-        address="927fbf89-6ab2-4d71-9901-06bc6c363fc0.hana.trial-us10.hanacloud.ondemand.com",
+        address="xxxxxxxxxxx.hana.trial-us10.hanacloud.ondemand.com",
         port="443",
         user=os.environ.get('HANA_USER'),
         password=os.environ.get('HANA_PASSWORD'),
