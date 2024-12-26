@@ -21,7 +21,7 @@ openai.api_key = os.environ.get('OPENAI_API_KEY')
 def init_hana_components():
     # HANA connection settings
     HANA_CONNECTION = dbapi.connect(
-    address="927fbf89-6ab2-4d71-9901-06bc6c363fc0.hana.trial-us10.hanacloud.ondemand.com",
+    address="xxxxxxxxxxxxxxx.hana.trial-us10.hanacloud.ondemand.com",
     port="443",
     user=os.environ.get('HANA_USER'),
     password=os.environ.get('HANA_PASSWORD'),
