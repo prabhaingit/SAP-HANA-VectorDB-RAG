@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RAG Q&A System</title>
+    <style>
+        body { max-width: 800px; margin: 2rem auto; padding: 0 1rem; font-family: sans-serif; }
+        .query-box { width: 100%; padding: 0.5rem; margin: 1rem 0; }
+        .answer-section { background: #f5f5f5; padding: 1rem; border-radius: 4px; margin: 1rem 0; }
+        .sources { background: #fff; padding: 1rem; margin-top: 1rem; border: 1px solid #ddd; }
+        .source-content { margin: 0.5rem 0; padding: 0.5rem; background: #f9f9f9; }
+        .error { color: red; background: #fee; padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Knowledge Base SAP HANA Vector DB</h1>
+    
+    <form method="POST">
+        <textarea class="query-box" name="user_input" rows="4" placeholder="Ask your question..."></textarea>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if output %}
+        <div class="answer-section">
+            <h3>Q: {{ output.query }}</h3>
+            <p>A: {{ output.answer }}</p>
+            
+            {% if output.source_documents %}
+                <div class="sources">
+                    <h4>Sources ({{ output.source_documents|length }} documents):</h4>
+                    {% for doc in output.source_documents %}
+                        <div class="source-content">
+                            <p><strong>Source:</strong> {{ doc.metadata.get('source', 'Unknown') }}</p>
+                            <p><strong>Content:</strong> {{ doc.page_content }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
