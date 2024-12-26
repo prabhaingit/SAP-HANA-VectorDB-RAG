@@ -7,9 +7,9 @@ applications:
   buildpacks: 
   - python_buildpack
   env: 
-    HANA_HOST: 927fbf89-6ab2-4d71-9901-06bc6c363fc0.hana.trial-us10.hanacloud.ondemand.com
+    HANA_HOST: xxxxxxxxxxxxxxx.hana.trial-us10.hanacloud.ondemand.com
     HANA_PORT: 443
-    HANA_USER: DBADMIN
-    HANA_PASSWORD: ObSq6arqi31!
+    HANA_USER: xxxxxxxx
+    HANA_PASSWORD: xxxxxxxxxxxx
 
   command: python upload-to-hana-vectordb.py
