@@ -1,0 +1,147 @@
+<!-- templates/upload.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload PDF to Vector DB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 1rem;
+            font-family: 'Poppins', sans-serif;
+            background: #f0f2f5;
+            color: #2d3748;
+        }
+        
+        h1 {
+            color: #2b6cb0;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .file-input-container {
+            border: 2px dashed #4299e1;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        button {
+            background: #4299e1;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: fit-content;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: #2b6cb0;
+        }
+
+        .success {
+            background: #c6f6d5;
+            color: #2f855a;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+
+        .error {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+
+        .filename {
+            color: #4a5568;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload PDF to HANA Vector DB</h1>
+    
+    <div class="container">
+        <form method="post" enctype="multipart/form-data" class="upload-form">
+            <div class="file-input-container" onclick="document.getElementById('file').click()">
+                <p>Click to select PDF file or drag and drop here</p>
+                <input type="file" name="file" id="file" accept=".pdf">
+            </div>
+            <button type="submit">Upload and Process</button>
+        </form>
+
+        {% if success %}
+        <div class="success">
+            <p>Successfully processed file: <span class="filename">{{ filename }}</span></p>
+            <p>Created {{ chunk_count }} chunks in the vector database.</p>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="error">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Display selected filename
+        document.getElementById('file').addEventListener('change', function() {
+            const fileName = this.files[0]?.name;
+            if (fileName) {
+                this.parentElement.querySelector('p').textContent = `Selected: ${fileName}`;
+            }
+        });
+
+        // Drag and drop functionality
+        const dropZone = document.querySelector('.file-input-container');
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#2b6cb0';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.borderColor = '#4299e1';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#4299e1';
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'application/pdf') {
+                const fileInput = document.getElementById('file');
+                fileInput.files = e.dataTransfer.files;
+                dropZone.querySelector('p').textContent = `Selected: ${file.name}`;
+            }
+        });
+    </script>
+</body>
+</html>
