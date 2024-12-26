@@ -1,9 +1,0 @@
-Flask==2.3.*
-langchain
-hdbcli
-#sentence-transformers
-openai
-#langchain-experimental
-langchain-community
-langchain-openai
-python-dotenv
